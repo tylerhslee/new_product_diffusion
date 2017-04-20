@@ -1,0 +1,25 @@
+The modules have been tested on Python 3.5.2.
+They collect all weekly sales data for all regions on vgchartz.com.
+
+==============================================================================
+
+Instructions
+
+Please install all the modules listed in requirements.txt. You can do so
+with a following command in the terminal:
+
+    pip intall -r requirements.txt
+
+If the default Python version is NOT 3.x on your machine, you may want to use
+pip3 instead of pip.
+
+If you get any ImportError while running the modules, you may want to install
+the following modules manually (They are all installabe via pip):
+
+    BeautifulSoup
+    pandas
+    requests
+
+Once you have set up the working environment, please run main.py. All output
+files will be located in release/data. I have included a sample data of USA 
+as a reference.
