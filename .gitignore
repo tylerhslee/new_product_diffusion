@@ -5,3 +5,8 @@ npd/iri2012/
 # vgchartz project
 vgchartz/sample/
 vgchartz/vgenv/
+
+# python
+vgchartz/release/.venv/*
+vgchartz/release/data/*
+**/*.pyc

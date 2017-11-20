@@ -1,10 +1,13 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
-from Collector import URLCollector, DataCollector
+from sqlalchemy import create_engine
+from collector import URLCollector, DataCollector
 
 
 def get_all_URL():
@@ -102,7 +105,41 @@ def export_csv(region, df):
 
 # ============================================================================
 
+def save_mysql(region, df, engine):
+    region = region.lower()
+    df.to_sql(region, engine, if_exists='append')
+
+# ============================================================================
+
+def read_mysql(region, engine):
+    region = region.lower()
+    query = 'SELECT week, total_sales FROM {region}'.format(region=region)
+    df = pd.read_sql(query, engine)
+    return df
+
+# ============================================================================
+
+def draw_plot(region, df):
+    df['total_sales'] = df['total_sales'].replace(['N/A'], '0')
+    df['total_sales'] = df['total_sales'].str.replace(',', '')
+    df['total_sales'] = pd.to_numeric(df['total_sales'])
+    gb = df.groupby('week')['total_sales'].mean()
+    gb_df = pd.DataFrame(gb)
+ 
+    x = gb_df.index
+    y = gb_df['total_sales']
+    title = region[0].upper() + region[1:]
+    plt.plot(x, y, 'ro')
+    plt.axis[x[0], x[len(x)-1], y[0], y[len(y)-1]]
+    plt.title(title)
+    # plt.show()
+
+# ============================================================================
+
+
 def main():
+    engine = create_engine('mysql://tylerhslee:Mr.bean22@localhost:3306/testdb')
+
     weekly_regional = get_all_URL()
     regional_rankings = get_ranks(weekly_regional)
 
@@ -111,11 +148,11 @@ def main():
         regional_data = regional_rankings[region]
         data_table = generate_df(regional_data)
         export_csv(region, data_table)
-
-    return 0
-
+        save_mysql(region, data_table, engine)
+    
+        df = read_mysql(region, engine)
+        draw_plot(region, df)
 
 if __name__ == '__main__':
-    exit = main()
-    if exit != 0:
-        print(exit)
+    main()
+
