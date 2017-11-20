@@ -21,5 +21,5 @@ the following modules manually (They are all installabe via pip):
     requests
 
 Once you have set up the working environment, please run main.py. All output
-files will be located in release/data. I have included a sample data of USA 
+files will be located in release/output. I have included a sample data of USA 
 as a reference.

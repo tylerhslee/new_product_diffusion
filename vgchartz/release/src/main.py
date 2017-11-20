@@ -94,7 +94,7 @@ def generate_df(regional_data):
 # ============================================================================
 
 def export_csv(region, df):
-    target_dir = 'data'
+    target_dir = 'output'
     file_name = region + '.csv'
 
     # ../data/region.csv
