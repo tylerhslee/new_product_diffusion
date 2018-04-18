@@ -94,26 +94,4 @@ The directory has the following structure:
     |   |   ├── beer_PANEL_GR_1479_1530.dat
     |   |   └── beer_PANEL_MK_1479_1530.dat
     |   └── ...
-    └── ...  
-
-# Local Module
-## newproduct.py
-
-This script is called by every other scripts, and functions as a local module. It defines many important varibles, such as `category`, `year`, and `outlet`. It also contains several functions that are simply imported by other scripts for clarity and readability.
-
-The most important function this module serves is navigating around the directories. All functions defined here has a loop that walks through the tree using the `os` module. For details on what each function does, refer to the source code.
-
-# Part 1: Weekly Product Summary
-## prod\_occ.py
-
-The name stands for "product occurrence." Basically, this script manipulates the raw data to create a weekly summary of each product's performance. Two csv files are generated in the process: `{category}\_occ.csv` and `{category}\_sales.csv`.
-
-**_\occ.csv**  
-This file shows whether a product was in the market at any given week. The values are in boolean.  
-COLUMNS: weeks  
-INDEX: product brand names (as written in parsed stub files)  
-
-**_\sales.csv**  
-This file shows the total amount of a product sold in any given week in *dollars*. The values are in floats.  
-COLUMNS: weeks  
-INDEX: product brand names (as written in parsed stub files)  
+    └── ...   
