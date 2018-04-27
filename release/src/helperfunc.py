@@ -3,20 +3,15 @@ Python 3.x
 
 This module provides helper functions to be used in main.py to perform individual level data manipulation. These data is stored in DataReader instance as one of its attributes, and later are concatenated though its method functions.
 '''
-
 from gvar import BRAND_COL, CATEGORY
 import pandas as pd
 import os
 
-# define global variables not in gvar
 WEEK_COL = 'WEEK'
 TOT_SALE_COL = 'DOLLARS'
 SOLD_UNITS_COL = 'UNITS'
 
-#-------------------------------------------------------------------------------------------------
-
 # load prompt to save some time
-
 def load():
     invalid = 1
     while invalid == 1:
@@ -27,21 +22,18 @@ def load():
         elif prompt.upper() == 'N':
             while invalid == 1:
                 prompt2 = input('Category to start from: ')
-            
-                try: start = CATEGORY.index(prompt2.lower())
+                try:
+		    start = CATEGORY.index(prompt2.lower())
                 except ValueError:
                     print(prompt2 + ' is not a valid category.')
                     continue
                 else: invalid = 0
         else:
             print('That is not a valid input.')
-
     return start
 
-#-------------------------------------------------------------------------------------------------
 
 def occurrence(inst):
-
 	# should be called under the OUTLET loop
 	# takes occ_data for each store and appends it to inst.occ_list
 	print('>> Gathering OCC data... ', end = "")
@@ -49,10 +41,8 @@ def occurrence(inst):
 	inst.occ_list.append(pd.get_dummies(occ_data.set_index(BRAND_COL)[WEEK_COL]).groupby(level=0).max())
 	print('Done')
 
-#-------------------------------------------------------------------------------------------------
 
 def sales(inst):
-	
 	# should be called under the OUTLET loop
 	# adds sales amount to inst.sales_data
 	print('>> Gathering SALES data...', end = " ")
@@ -67,10 +57,8 @@ def sales(inst):
 	inst.sales_data.values[row_indexers,col_indexers] += dollars
 	print('Done')
 
-#-------------------------------------------------------------------------------------------------
 
 def units(inst):
-
 	# operates similarly to sales()
 	print('>> Gathering UNITS data... ', end='')
 	init_data = inst.data[[BRAND_COL, WEEK_COL, SOLD_UNITS_COL]].groupby([BRAND_COL, WEEK_COL]).sum()
@@ -84,10 +72,8 @@ def units(inst):
 	inst.units_data.values[row_indexers,col_indexers] += units
 	print('Done')
 
-#-------------------------------------------------------------------------------------------------
 
 def panels(inst):
-
 	# imports _PANEL_ data and appends it to inst.panel_list
 	print('>> Gathering PANEL data... ', end='')
 	target_dir = inst.target_dir
