@@ -1,6 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 '''
-Python 3.x
-
 This module executes main() function that performs everything.
 First create the instance of DataReader, then use its methods and other helper function to achieve desired functionalities.
 '''
