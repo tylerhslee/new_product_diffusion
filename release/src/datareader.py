@@ -27,7 +27,6 @@ class DataReader():
     # each csv file contains data from all years (2001 - 2011)
 
     def __init__(self):
-
         # dictionary used to map brands and UPC numbers
         self.ref = {}
 
@@ -41,9 +40,7 @@ class DataReader():
         self.units_list = []
         self.panel_list = []
 
-
     def create_reference(self, cat, time):
-
         # use data from stub files to create brand - UPC mapping
         # only occurs on year 1, 7, and 8
         if time == 1:
@@ -66,11 +63,11 @@ class DataReader():
         for index, upc in enumerate(upc_nums):
             self.ref[upc] = brands[index]
 
-
     def create_zeroes(self, cat, time):
-
-        if time < 8: self.target_dir = os.path.join('Year'+str(time), 'External', cat)
-        else: self.target_dir = os.path.join('Year'+str(time), cat)
+        if time < 8:
+            self.target_dir = os.path.join('Year'+str(time), 'External', cat)
+        else:
+            self.target_dir = os.path.join('Year'+str(time), cat)
 
         # create a table with weeks in columns and brand names in indices
         # all values are initialized to 0.0
@@ -89,15 +86,16 @@ class DataReader():
 
 
     def store_data(self, cat, time, store):
-
         # import data files that contain the respective store data
         print("\nImporting Year {} {} {} data...".format(time, cat, store))
         self.cat = cat
         self.time = time
         self.store = store
 
-        if store != 'MA': target_file = '{}_{}_{}_{}'.format(cat, store, self.beg, self.end)
-        else: target_file = '{}_PANEL_MA_{}_{}.dat'.format(cat, self.beg, self.end)
+        if store != 'MA':
+            target_file = '{}_{}_{}_{}'.format(cat, store, self.beg, self.end)
+        else:
+            target_file = '{}_PANEL_MA_{}_{}.dat'.format(cat, self.beg, self.end)
 
         target_path = os.path.join(self.target_dir, target_file)
 
@@ -108,26 +106,21 @@ class DataReader():
             else:
                 self.data = pd.read_csv(target_path, delim_whitespace=True)
         self.reformat_upc(self.data)
-
         
     def reformat_upc(self, data):
-
         # properly format the UPC numbers
         # they cannot have any symbols in them; e.g. 1-1-22 -> 1122
         if self.store != 'MA':
             print('Reformatting UPC Numbers... ', end='')
             data[UPC_COL] = data['SY'].apply('{:02d}'.format) + data['GE'].apply('{:02d}'.format) + data['VEND'].apply('{:05d}'.format) + data['ITEM'].apply('{:05d}'.format)
             data[BRAND_COL] = data[UPC_COL].apply(lambda upc: self.ref[upc])
-
         else:
             print('Reformatting UPC numbers... ', end='')
             data[UPC_COL] = data['COLUPC'].map(str).apply(lambda x: x[:-11].zfill(2) + x[-11].zfill(2) + x[-10:-5] + x[-5:])
             data[BRAND_COL] = data[UPC_COL].apply(lambda upc: self.ref[upc])
         print('Done')
 
-
     def export_data(self, data, data_type, file_name):
-
         # data_type parameter defines what kind of data is being exported
         # file_name is NOT the path to the file
         dest = os.path.join(OUT_PATH, data_type)
@@ -135,8 +128,6 @@ class DataReader():
             os.makedirs(dest)
         file_path = os.path.join(dest, file_name)
         data.to_csv(file_path)
-
-#------------------------------------------------------------------------------------------------
 
     # functions that go with helper functions (defined in helperfunc.py)
     # they take the respective list attribute from the instance and concat the DataFrames
@@ -150,7 +141,6 @@ class DataReader():
         file_name = self.cat + '.csv'
         self.export_data(occ, 'occurrence', file_name)
 
-
     def sales(self):
         print('>> Combining SALES data... ', end='')
         self.total_sales = pd.concat(self.sales_list)
@@ -162,7 +152,6 @@ class DataReader():
 
 
     def units(self):
-
         # this function must be called AFTER self.sales()
         print('>> Combining UNITS data... ', end='')
         units = pd.concat(self.units_list)
@@ -181,7 +170,6 @@ class DataReader():
 
 
     def panels(self):
-
         # combine data in self.panel_list into one huge table
         print('>> Combining PANEL data... ', end='')
         panels = pd.concat(self.panel_list)
