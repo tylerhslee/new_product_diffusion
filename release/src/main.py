@@ -4,7 +4,12 @@
 This module executes main() function that performs everything.
 First create the instance of DataReader, then use its methods and other helper function to achieve desired functionalities.
 '''
+import logging
+
 from progressbar import ProgressBar, UnknownLength
+from gvar import YEAR, CATEGORY, OUTLET, start_logging
+from datareader import DataReader
+from helperfunc import *
 
 INITIAL_PROGRESS = 0
 PROGRESS_INCREMENT = 1
@@ -16,13 +21,6 @@ def update_pbar(pbar, progress):
 	pbar.update(progress)
 
 	return pbar, progress
-
-#------------------------------------------------------------------------------------------------
-
-from gvar import YEAR, CATEGORY, OUTLET, start_logging
-from datareader import DataReader
-from helperfunc import *
-import logging
 
 LOG_FILE = 'test_log.txt'
 start_logging(LOG_FILE)
