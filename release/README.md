@@ -1,15 +1,26 @@
-Research Title: New Product Diffusion
-School: Leonard N. Stern School of Business at New York University
-Supervisor: Professor Masakazu Ishihara
+# Overview
+Research Title: New Product Diffusion  
+School: New York University Leonard N. Stern School of Business  
+Supervisor: Professor Masakazu Ishihara  
 
-All scripts listed in the repository have been written by myself.
-The project is still on going (no expected end date as of yet).
+This research project was conducted under Stern Program for Undergraduate Research. All scripts listed in the repository have been written by myself. The purpose of the script is to run through the file system, then clean and aggregate the data into organized CSV files.
 
-# Data
+The entry point for the script is `src/main.py`. The script has only been tested and used in a UNIX environment.
+
+## Installation
+```bash
+$ git clone https://github.com/tylerhslee/new_product_diffusion
+$ cd new_product_diffusion/release/src
+$ pip3 install -r requirements.txt
+$ chmod +x main.py
+$ ./main.py
+```
+
+## Data
 Due to other complications, none of the actual data can be uploaded.
 However, I will do my best to explain their structure and contents below.
 
-## Consumer Data
+### Consumer Data
 The consumer data consists of 1023 different categories based on their `product category`, `year`, and `outlet`.
 
 * `product category` includes 31 different kinds of products that are commonly found in grocery stores, drug stores, and mass stores.
@@ -40,7 +51,7 @@ Following is a sample (fake) data:
     555555 1114  0  5 55555   555     2    18.58 NONE 0 0
 
 
-## Product Data
+### Product Data
 Product Data are only categorized into different years and product categories. There are total of 93 different files.
 
 * The range of the `year` is the same as the consumer data, except that for product data, they are grouped into *01-06*, *07*, and *08-11*.
@@ -63,7 +74,7 @@ Following is a sample (fake) data:
 
     4444444	1139	1	MA	14.88	4444444	44444444444
 
-## Directory Tree
+### Directory Tree
 The directory has the following structure:
 
     /
