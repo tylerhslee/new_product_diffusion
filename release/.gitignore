@@ -1,0 +1,5 @@
+# NPD project
+data/ADE/
+data/iri2012/
+src/.venv/*
+**/*.pyc
