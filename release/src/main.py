@@ -1,19 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 '''
-Python 3.x
-
 This module executes main() function that performs everything.
 First create the instance of DataReader, then use its methods and other helper function to achieve desired functionalities.
 '''
+from progressbar import ProgressBar, UnknownLength
 
-
-# define magic literals
 INITIAL_PROGRESS = 0
 PROGRESS_INCREMENT = 1
 SUCCESS_CODE = 0
 
-#------------------------------------------------------------------------------------------------
-
-from progressbar import ProgressBar, UnknownLength
 
 def update_pbar(pbar, progress):
 	progress += PROGRESS_INCREMENT
@@ -31,28 +27,24 @@ import logging
 LOG_FILE = 'test_log.txt'
 start_logging(LOG_FILE)
 
-#------------------------------------------------------------------------------------------------
 
 def final_product(inst, cat):
-
 	print("\nFinalizing {} data for Year 2001 through 2011...".format(cat))
-
+	
 	# run instance methods that concatenate approrpriate data
 	inst.occurrence()
 	inst.sales()
 	inst.units()
 	inst.panels()
 
-#------------------------------------------------------------------------------------------------
 
 def main(start):
-
 	file_count = len(CATEGORY[start:]) * len(YEAR) * len(OUTLET)
 	pbar = ProgressBar(max_value=file_count, redirect_stdout=True)
 	progress = INITIAL_PROGRESS
 
 	for cat in CATEGORY[start:]:
-
+		
 		# instance of DataReader that will retain all necessary data for categorical manipulation
 		by_category = DataReader()
 
@@ -91,7 +83,6 @@ def main(start):
 
 	return SUCCESS_CODE
 
-#------------------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
 	start = load()
