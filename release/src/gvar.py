@@ -6,8 +6,8 @@ All global variables are named in capital letters to prevent naming conflicts.
 '''
 
 import os
+import logging
 
-# define globals
 YEAR = [y for y in range(1,12)]
 CATEGORY = os.listdir(os.path.join('..','ADE','Year1', 'External'))
 OUTLET = ['drug', 'groc', 'MA']
@@ -30,17 +30,12 @@ STUBS = 'parsed_stub_files'
 STUBS2007 = 'parsed_stub_files2007'
 STUBS2008 = 'parsed_stub_files2008-2011'
 
-#--------------------------------------------------------------------------------------
-
-# create Log directory
 if not(os.path.exists(LOG_DIR)):
     os.makedirs(LOG_DIR)
 
-# create output directory
 if not(os.path.exists(OUT_DIR)):
     os.makedirs(OUT_DIR)
 
-# change the working directory to ../ADE/
 os.chdir(os.path.join('..','ADE'))
 
 for root, dirs, files in os.walk(os.getcwd()):
@@ -55,12 +50,9 @@ for root, dirs, files in os.walk(os.getcwd()):
 			newpath = os.path.join(root, newname)
 			os.rename(oldpath, newpath)
 
-#--------------------------------------------------------------------------------------
 
-import logging
-
+# TODO: Fix this global logging mumbo jumbo
 def start_logging(logfile):
-
     # create logfile according to the module
     logfile = os.path.join(LOG_PATH, logfile) # Log/logfile.txt
     log = open(logfile, 'w')
